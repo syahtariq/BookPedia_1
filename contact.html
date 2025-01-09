@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - BookPedia</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://images.pexels.com/photos/1242348/pexels-photo-1242348.jpeg?auto=compress&cs=tinysrgb&w=600');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        header {
+            background-color: rgba(30, 42, 58, 0.8);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 40px;
+        }
+        nav {
+            background-color: rgba(52, 73, 94, 0.8);
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        nav a:hover {
+            color: #f39c12;
+        }
+        .contact-form {
+            margin: 50px auto;
+            width: 60%;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .contact-form button {
+            background-color: #34495e;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .contact-form button:hover {
+            background-color: #f39c12;
+        }
+        .contact-info {
+            margin: 50px auto;
+            width: 60%;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .contact-info h2 {
+            color: #34495e;
+        }
+        footer {
+            background-color: rgba(52, 73, 94, 0.8);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Contact Us</h1>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="books.html">Reviews</a>
+        <a href="events.html">Events</a>
+		<a href="join-us.html">Join Us</a>
+        <a href="forum.html">Forum</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="contact-form">
+        <h2>Send Us a Message</h2>
+        <form id="contact-form" onsubmit="return validateForm()">
+            <input type="text" id="name" name="name" placeholder="Your Name" required>
+            <input type="email" id="email" name="email" placeholder="Your Email" required>
+            <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+        <p id="form-response" style="color: green;"></p>
+    </div>
+
+    <div class="contact-info">
+        <h2>Contact Information</h2>
+        <p>Feel free to reach out to us using any of the following contact details:</p>
+        <p><strong>Address:</strong> 123 Book Street, Literature City, BK 45678</p>
+        <p><strong>Phone:</strong> +1 (800) 123-4567</p>
+        <p><strong>Email:</strong> <a href="mailto:contact@bookpedia.com">contact@bookpedia.com</a></p>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 BookPedia | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        // JavaScript form validation function
+        function validateForm() {
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var message = document.getElementById("message").value;
+            var response = document.getElementById("form-response");
+
+            // Simple validation for empty fields
+            if (name == "" || email == "" || message == "") {
+                response.style.color = "red";
+                response.innerHTML = "All fields must be filled out.";
+                return false;
+            }
+
+            // Basic email validation
+            var emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            if (!email.match(emailPattern)) {
+                response.style.color = "red";
+                response.innerHTML = "Please enter a valid email address.";
+                return false;
+            }
+
+            // If everything is okay, display a success message
+            response.style.color = "green";
+            response.innerHTML = "Your message has been sent successfully!";
+            return false; // Prevent page reload for demonstration
+        }
+    </script>
+</body>
+</html>

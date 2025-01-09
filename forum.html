@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum Community - BookPedia</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+        header p {
+            margin: 5px 0 0;
+            font-size: 16px;
+            color: #ddd;
+        }
+        nav {
+            background-color: #34495e;
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        nav a:hover {
+            color: #f39c12;
+        }
+        .forum-container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .forum-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .forum-header h2 {
+            font-size: 28px;
+            color: #2c3e50;
+        }
+        .post {
+            border: 1px solid #e0e0e0;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .post-header {
+            background-color: #f8f8f8;
+            padding: 15px;
+        }
+        .post-header h3 {
+            margin: 0;
+            font-size: 20px;
+            color: #34495e;
+        }
+        .post-header .meta {
+            margin-top: 5px;
+            font-size: 12px;
+            color: #888;
+        }
+        .post-body {
+            padding: 15px;
+        }
+        .post-body p {
+            margin: 0 0 10px;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+        }
+        .reply-form {
+            border-top: 1px solid #e0e0e0;
+            padding: 10px 15px;
+            background-color: #f9f9f9;
+        }
+        textarea, input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            resize: vertical;
+        }
+        button {
+            padding: 8px 16px;
+            font-size: 14px;
+            color: white;
+            background-color: #3498db;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .replies {
+            padding: 10px 15px;
+            background-color: #f8f8f8;
+            border-top: 1px solid #ddd;
+        }
+        .reply {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #444;
+        }
+        footer {
+            background-color: #34495e;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>BookPedia Forum</h1>
+        <p>Connect with book lovers worldwide!</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="books.html">Reviews</a>
+        <a href="events.html">Events</a>
+        <a href="join-us.html">Join Us</a>
+        <a href="forum.html">Forum</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="forum-container">
+        <div class="forum-header">
+            <h2>Latest Discussions</h2>
+        </div>
+        <div id="post-container">
+            <!-- Existing forum posts will be loaded here -->
+        </div>
+        <h2 style="text-align: center;">Create a New Post</h2>
+        <div>
+            <input type="text" id="post-username" placeholder="Enter Your Username" required>
+            <input type="text" id="post-title" placeholder="Enter Post Title" required>
+            <textarea id="post-content" rows="3" placeholder="Write your post here..." required></textarea>
+            <button onclick="addPost()">Submit Post</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 BookPedia | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        const posts = [
+            {
+                username: "John",
+                title: "What's Your Favorite Book Genre?",
+                content: "Join the conversation and tell us about your favorite book genres!",
+                replies: [
+                    { username: "Jane", content: "I love fantasy!" },
+                    { username: "Mark", content: "Science fiction for me!" }
+                ],
+            },
+        ];
+
+        function renderPosts() {
+            const postContainer = document.getElementById('post-container');
+            postContainer.innerHTML = '';
+
+            posts.forEach((post, index) => {
+                const postDiv = document.createElement('div');
+                postDiv.classList.add('post');
+
+                postDiv.innerHTML = `
+                    <div class="post-header">
+                        <h3>${post.title}</h3>
+                        <div class="meta">Posted by ${post.username} | ${new Date().toLocaleDateString()}</div>
+                    </div>
+                    <div class="post-body">
+                        <p>${post.content}</p>
+                    </div>
+                    <div class="replies" id="replies-${index}">
+                        ${post.replies.map(reply => `<div class="reply"><strong>${reply.username}:</strong> ${reply.content}</div>`).join('')}
+                    </div>
+                    <div class="reply-form">
+                        <input type="text" id="reply-username-${index}" placeholder="Enter Your Username" required>
+                        <textarea id="reply-${index}" rows="2" placeholder="Write a reply..." required></textarea>
+                        <button onclick="addReply(${index})">Submit Reply</button>
+                    </div>
+                `;
+
+                postContainer.appendChild(postDiv);
+            });
+        }
+
+        function addPost() {
+            const username = document.getElementById('post-username').value.trim();
+            const title = document.getElementById('post-title').value.trim();
+            const content = document.getElementById('post-content').value.trim();
+
+            if (username && title && content) {
+                posts.push({ username, title, content, replies: [] });
+                document.getElementById('post-username').value = '';
+                document.getElementById('post-title').value = '';
+                document.getElementById('post-content').value = '';
+                renderPosts();
+            } else {
+                alert('Please fill out all fields.');
+            }
+        }
+
+        function addReply(index) {
+            const replyUsername = document.getElementById(`reply-username-${index}`).value.trim();
+            const replyContent = document.getElementById(`reply-${index}`).value.trim();
+
+            if (replyUsername && replyContent) {
+                posts[index].replies.push({ username: replyUsername, content: replyContent });
+                document.getElementById(`reply-username-${index}`).value = '';
+                document.getElementById(`reply-${index}`).value = '';
+                renderPosts();
+            } else {
+                alert('Please fill out all fields.');
+            }
+        }
+
+        // Render the existing forum data on page load
+        renderPosts();
+    </script>
+</body>
+</html>

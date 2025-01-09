@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Us - BookPedia</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ecf0f1;
+            background-image: url('https://images.pexels.com/photos/6147373/pexels-photo-6147373.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); /* Background image */
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensures full height */
+        }
+        header {
+            background-color: rgba(30, 42, 58, 0.8);
+            padding: 20px 0;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 40px;
+            font-weight: bold;
+        }
+        header p {
+            font-size: 18px;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: rgba(52, 73, 94, 0.8);
+            padding: 15px 0;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #f39c12;
+        }
+
+        /* Join Us Section */
+        .join-us {
+            text-align: center;
+            padding: 100px 20px;
+            background-color: rgba(255, 255, 255, 0.9); /* Transparent white background */
+            border-radius: 10px;
+            margin-top: 40px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .join-us h2 {
+            font-size: 32px;
+            color: #34495e;
+            margin-bottom: 20px;
+        }
+        .join-us p {
+            font-size: 18px;
+            color: #34495e;
+            margin-bottom: 40px;
+        }
+
+        /* Form Styles */
+        .join-us form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .join-us form input,
+        .join-us form button {
+            width: 100%;
+            margin: 10px 0;
+            padding: 15px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: transform 0.3s ease-in-out;
+        }
+        .join-us form input:focus,
+        .join-us form button:hover {
+            transform: scale(1.05);
+            border-color: #3498db;
+        }
+
+        /* Button */
+        .join-us form button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .join-us form button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Label Styling */
+        label {
+            color: #7f8c8d; /* Light grey color */
+            font-size: 16px;
+            margin-bottom: 8px;
+            text-align: left;
+            width: 100%;
+        }
+
+        /* Footer */
+        footer {
+            background-color: rgba(52, 73, 94, 0.8);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: auto; /* This will push the footer to the bottom */
+        }
+
+        /* Animation for Form */
+        .join-us form {
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Success message */
+        .success-message {
+            display: none;
+            color: green;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Join Us</h1>
+        <p>Become a part of the BookPedia community today!</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="books.html">Reviews</a>
+        <a href="events.html">Events</a>
+        <a href="join-us.html">Join Us</a>
+        <a href="forum.html">Forum</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="join-us">
+        <h2>Sign Up</h2>
+        <p>Join thousands of book lovers in exploring and discussing the latest books, events, and more!</p>
+        <form id="joinForm" onsubmit="showSuccessMessage(event)">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+            <label for="email">Your Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+            <label for="password">Create Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+            <button type="submit">Join Now</button>
+        </form>
+
+        <!-- Success message -->
+        <p id="successMessage" class="success-message">You have successfully signed up!</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 BookPedia | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        function showSuccessMessage(event) {
+            event.preventDefault();  // Prevent the form from submitting
+            document.getElementById('successMessage').style.display = 'block';  // Show success message
+            document.getElementById('joinForm').reset();  // Clear the form fields
+        }
+    </script>
+
+</body>
+</html>

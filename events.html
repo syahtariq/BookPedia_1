@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - BookPedia</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://images.pexels.com/photos/3847486/pexels-photo-3847486.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        header {
+            background-color: rgba(30, 42, 58, 0.8);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 40px;
+        }
+        nav {
+            background-color: rgba(52, 73, 94, 0.8);
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        nav a:hover {
+            color: #f39c12;
+        }
+        .events-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .event-item {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .event-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        .event-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .event-item h3 {
+            color: #34495e;
+            font-size: 18px;
+            margin-top: 15px;
+        }
+        .event-item p {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .event-countdown {
+            font-size: 16px;
+            color: #f39c12;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        footer {
+            background-color: rgba(52, 73, 94, 0.8);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Upcoming Events</h1>
+        <p>Join us at BookPedia for exciting events, book launches, discussions, and more!</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="books.html">Reviews</a>
+        <a href="events.html">Events</a>
+        <a href="join-us.html">Join Us</a>
+        <a href="forum.html">Forum</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="events-list">
+        <!-- Event 1 -->
+        <div class="event-item" data-date="2025-01-15T00:00:00">
+            <img src="https://www.hiddengemsbooks.com/wp-content/uploads/2022/07/book-launch.jpg" alt="Book Launch">
+            <h3>Book Launch: "The Silent Forest"</h3>
+            <p>Date: 15th January 2025</p>
+            <p>Location: Book Haven Community Center</p>
+            <p>Join us for the launch of "The Silent Forest" by author Emma Rowe.</p>
+            <div class="event-countdown">Loading countdown...</div>
+        </div>
+
+        <!-- Event 2 -->
+        <div class="event-item" data-date="2025-01-20T00:00:00">
+            <img src="https://www.booktrust.org.uk/globalassets/images/illustrations/kate-alizadeh-2018-jpgs/kate-alizadeh-2018-teacher-reading-16x9.jpg" alt="Reading Session">
+            <h3>Reading Session: "Mystery Hour"</h3>
+            <p>Date: 20th January 2025</p>
+            <p>Location: Online (Zoom)</p>
+            <p>Join us for an online reading session featuring mystery novels and discussions.</p>
+            <div class="event-countdown">Loading countdown...</div>
+        </div>
+
+        <!-- Event 3 -->
+        <div class="event-item" data-date="2024-12-25T00:00:00">
+            <img src="https://media.istockphoto.com/id/1212702257/vector/literature-fans-people-with-books.jpg?s=612x612&w=0&k=20&c=gbw52-xL1Ta7suOB9ifI7_spWh65sAlReJ02J1R63yM=" alt="Book Discussion">
+            <h3>Book Discussion: "Fiction vs Reality"</h3>
+            <p>Date: 25th December 2024</p>
+            <p>Location: Book Haven Café</p>
+            <p>A discussion on the blend of fiction and reality in modern literature.</p>
+            <div class="event-countdown">Loading countdown...</div>
+        </div>
+
+        <!-- Event 4 -->
+        <div class="event-item" data-date="2025-01-05T00:00:00">
+            <img src="https://www.shutterstock.com/image-illustration/young-girl-reads-book-while-260nw-2168354785.jpg" alt="Author Meetup">
+            <h3>Author Meetup: "Writing for Change"</h3>
+            <p>Date: 5th January 2025</p>
+            <p>Location: Book Haven Community Center</p>
+            <p>Meet authors who are using literature to spark social change and engage in discussions.</p>
+            <div class="event-countdown">Loading countdown...</div>
+        </div>
+
+        <!-- Event 5 -->
+        <div class="event-item" data-date="2025-02-10T00:00:00">
+            <img src="https://www.shutterstock.com/shutterstock/photos/2154149213/display_1500/stock-vector-literature-concept-world-poetry-day-story-told-and-written-tiny-woman-stands-on-stack-of-books-2154149213.jpg" alt="Poetry Slam">
+            <h3>Poetry Slam: "Voices of the Future"</h3>
+            <p>Date: 10th February 2025</p>
+            <p>Location: Book Haven Café</p>
+            <p>Join us for a night of poetry where poets of all ages share their work on the theme of hope and progress.</p>
+            <div class="event-countdown">Loading countdown...</div>
+        </div>
+
+        <!-- Event 6 -->
+        <div class="event-item" data-date="2025-12-24T00:00:00">
+            <img src="https://t4.ftcdn.net/jpg/07/59/70/71/360_F_759707186_ADcxdhuP4IqtXJjzB1mSc1FoueARRVSu.jpg" alt="Children's Reading">
+            <h3>Children's Reading: "Magical Adventures"</h3>
+            <p>Date: 24th December 2025</p>
+            <p>Location: Book Haven Children's Section</p>
+            <p>Bring the kids for a fun and interactive reading session featuring magical adventures!</p>
+            <div class="event-countdown">Loading countdown...</div>
+        </div>
+
+        <!-- Event 7 -->
+        <div class="event-item" data-date="2025-01-20T00:00:00">
+            <img src="https://thumbs.dreamstime.com/b/homework-help-club-isolated-cartoon-vector-illustration-older-student-explaining-helps-child-meetup-tutoring-study-together-268655683.jpg" alt="Book Signing">
+            <h3>Book Signing: "The Journey Continues"</h3>
+            <p>Date: 20th January 2025</p>
+            <p>Location: Book Haven Bookstore</p>
+            <p>Meet the author of "The Journey Continues" for a book signing event.</p>
+            <div class="event-countdown">Loading countdown...</div>
+        </div>
+
+        <!-- Event 8 -->
+        <div class="event-item" data-date="2025-01-25T00:00:00">
+            <img src="https://carnegiestout.librarycalendar.com/sites/default/files/2022-12/Children%27s%20Book%20Writing%20Workshop.png" alt="Writing Workshop">
+            <h3>Writing Workshop: "From Ideas to Pages"</h3>
+            <p>Date: 25th January 2025</p>
+            <p>Location: Book Haven Community Center</p>
+            <p>Attend this workshop to learn the basics of writing and turning your ideas into a story.</p>
+            <div class="event-countdown">Loading countdown...</div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 BookPedia | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        function updateCountdowns() {
+            const eventItems = document.querySelectorAll('.event-item');
+
+            eventItems.forEach(item => {
+                const eventDate = new Date(item.getAttribute('data-date'));
+                const now = new Date();
+
+                const timeDiff = eventDate - now;
+
+                if (timeDiff > 0) {
+                    const days = String(Math.floor(timeDiff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+                    const hours = String(Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+                    const minutes = String(Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+                    const seconds = String(Math.floor((timeDiff % (1000 * 60)) / 1000)).padStart(2, '0');
+
+                    const countdownText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                    item.querySelector('.event-countdown').textContent = `Time left: ${countdownText}`;
+                } else {
+                    item.querySelector('.event-countdown').textContent = "Event has passed";
+                }
+            });
+        }
+
+        // Update countdowns every second
+        setInterval(updateCountdowns, 1000);
+        updateCountdowns(); // Initial call
+    </script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews - BookPedia</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://images.pexels.com/photos/335253/pexels-photo-335253.jpeg?auto=compress&cs=tinysrgb&w=600');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        header {
+            background-color: rgba(30, 42, 58, 0.8);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 40px;
+        }
+        nav {
+            background-color: rgba(52, 73, 94, 0.8);
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        nav a:hover {
+            color: #f39c12;
+        }
+        .review-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 20px;
+        }
+        .review-item {
+            background-color: white;
+            width: 220px;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .review-item:hover {
+            transform: scale(1.05);
+        }
+        .review-item img {
+            width: 150px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+        .review-item h3 {
+            color: #34495e;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .review-item p {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .review-item .rating {
+            color: #f39c12;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        footer {
+            background-color: rgba(52, 73, 94, 0.8);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Book Reviews</h1>
+        <p>Read what others think about the books in our collection</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="books.html">Reviews</a>
+        <a href="events.html">Events</a>
+		<a href="join-us.html">Join Us</a>
+        <a href="forum.html">Forum</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="review-list">
+        <!-- Book 1 -->
+        <div class="review-item">
+            <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1634748496i/58065033.jpg" alt="Lessons in Chemistry">
+            <h3>Lessons in Chemistry</h3>
+            <p>By Bonnie Garmus</p>
+            <div class="rating">⭐⭐⭐⭐⭐</div>
+            <p>"A delightful blend of humor, science, and feminism. Elizabeth Zott is an unforgettable character!"</p>
+        </div>
+        <!-- Book 2 -->
+        <div class="review-item">
+            <img src="https://images-na.ssl-images-amazon.com/images/I/81A-mvlo+QL.jpg" alt="The Covenant of Water">
+            <h3>The Covenant of Water</h3>
+            <p>By Abraham Verghese</p>
+            <div class="rating">⭐⭐⭐⭐⭐</div>
+            <p>"A sweeping tale of family, love, and resilience in Kerala. Verghese's storytelling is masterful."</p>
+        </div>
+        <!-- Book 3 -->
+        <div class="review-item">
+            <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1701980900i/61431922.jpg" alt="Fourth Wing">
+            <h3>Fourth Wing</h3>
+            <p>By Rebecca Yarros</p>
+            <div class="rating">⭐⭐⭐⭐⭐</div>
+            <p>"A thrilling mix of romance, dragons, and danger. A perfect read for fantasy lovers!"</p>
+        </div>
+        <!-- Book 4 -->
+        <div class="review-item">
+            <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1660145160i/61718053.jpg" alt="Happy Place">
+            <h3>Happy Place</h3>
+            <p>By Emily Henry</p>
+            <div class="rating">⭐⭐⭐⭐⭐</div>
+            <p>"A charming and emotional rom-com about rediscovering love. Emily Henry never disappoints!"</p>
+        </div>
+        <!-- Book 5 -->
+        <div class="review-item">
+            <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1655988385i/40121378.jpg" alt="Atomic Habits">
+            <h3>Atomic Habits</h3>
+            <p>By James Clear</p>
+            <div class="rating">⭐⭐⭐⭐⭐</div>
+            <p>"A transformative guide to building good habits and breaking bad ones. Highly practical and actionable."</p>
+        </div>
+        <!-- Book 6 -->
+        <div class="review-item">
+            <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1673458354i/62296528.jpg" alt="Spare">
+            <h3>Spare</h3>
+            <p>By Prince Harry</p>
+            <div class="rating">⭐⭐⭐⭐☆</div>
+            <p>"A deeply personal memoir that offers a rare glimpse into the life of a royal. Honest and compelling."</p>
+        </div>
+        <!-- Book 7 -->
+        <div class="review-item">
+            <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1688011813i/27362503.jpg" alt="It Ends With Us">
+            <h3>It Ends With Us</h3>
+            <p>By Colleen Hoover</p>
+            <div class="rating">⭐⭐⭐⭐⭐</div>
+            <p>"An emotional rollercoaster that sheds light on tough relationships. A must-read for fans of heartfelt drama."</p>
+        </div>
+        <!-- Book 8 -->
+        <div class="review-item">
+            <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1636978687i/58784475.jpg" alt="Tomorrow, and Tomorrow, and Tomorrow">
+            <h3>Tomorrow, and Tomorrow, and Tomorrow</h3>
+            <p>By Gabrielle Zevin</p>
+            <div class="rating">⭐⭐⭐⭐⭐</div>
+            <p>"A powerful story of creativity, love, and friendship that transcends generations. Brilliantly written."</p>
+        </div>
+    </div>
+     <div style="background-color: rgba(255, 255, 255, 0.8); padding: 20px; margin: 20px; border-radius: 8px;">
+    <h2 style="text-align: center; color: #34495e;">Submit Your Review</h2>
+    <form style="max-width: 500px; margin: 0 auto;" action="submit_review.php" method="POST">
+        <label for="bookTitle" style="color: #34495e; font-size: 16px;">Book Title:</label><br>
+        <input type="text" id="bookTitle" name="bookTitle" placeholder="Enter the book title" style="width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc;"><br>
+        
+        <label for="authorName" style="color: #34495e; font-size: 16px;">Author Name:</label><br>
+        <input type="text" id="authorName" name="authorName" placeholder="Enter the author's name" style="width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc;"><br>
+        
+        <label for="rating" style="color: #34495e; font-size: 16px;">Rating:</label><br>
+        <select id="rating" name="rating" style="width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc;">
+            <option value="5">⭐⭐⭐⭐⭐</option>
+            <option value="4">⭐⭐⭐⭐</option>
+            <option value="3">⭐⭐⭐</option>
+            <option value="2">⭐⭐</option>
+            <option value="1">⭐</option>
+        </select><br>
+        
+        <label for="reviewText" style="color: #34495e; font-size: 16px;">Your Review:</label><br>
+        <textarea id="reviewText" name="reviewText" placeholder="Write your review here..." style="width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; height: 100px;"></textarea><br>
+        
+        <button type="submit" style="background-color: #f39c12; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Submit Review</button>
+    </form>
+</div>
+
+    <footer>
+	
+        <p>&copy; 2024 BookPedia | All Rights Reserved</p>
+    </footer>
+</body>
+</html>
