@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - BookPedia</title>
+    <title>Admin Dashboard - BookPedia</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -23,39 +23,39 @@
         h2 {
             font-size: 1.5em;
             margin-bottom: 15px;
+            color: #f39c12;
         }
         .container {
-            width: 80%;
+            width: 90%;
             max-width: 1200px;
             margin: 30px auto;
         }
-        .book-form {
+        .form-container {
             background-color: white;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
-        .book-form input,
-        .book-form button {
+        .form-container input, .form-container button {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
             border-radius: 5px;
-            border: 1px solid #ccc; /* Changed border color to grey */
+            border: 1px solid #ccc;
             font-size: 16px;
         }
-        .book-form input:focus,
-        .book-form button:focus {
+        .form-container input:focus, .form-container button:focus {
             outline: none;
-            border-color: #999; /* Changed focus border color to a darker grey */
+            border-color: #f39c12;
         }
-        .book-list {
+        .list-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
+            margin-bottom: 40px;
         }
-        .book-item {
+        .list-item {
             background-color: white;
             padding: 20px;
             border-radius: 8px;
@@ -63,23 +63,22 @@
             text-align: center;
             transition: transform 0.3s ease;
         }
-        .book-item:hover {
+        .list-item:hover {
             transform: translateY(-5px);
         }
-        .book-item img {
+        .list-item img {
             width: 100%;
-            height: auto;
-            max-height: 200px;
-            object-fit: contain;
+            height: 200px;
+            object-fit: cover;
             margin-bottom: 15px;
+            border-radius: 5px;
         }
         .btn-container {
             display: flex;
             justify-content: center;
             gap: 10px;
         }
-        .btn-container button,
-        .btn-container a {
+        .btn-container button, .btn-container a {
             background-color: #f39c12;
             color: white;
             padding: 10px 15px;
@@ -89,16 +88,16 @@
             text-align: center;
             font-size: 14px;
             transition: background-color 0.3s;
+            border: none;
         }
-        .btn-container button:hover,
-        .btn-container a:hover {
+        .btn-container button:hover, .btn-container a:hover {
             background-color: #e67e22;
         }
-
-        /* Remove border for Edit and Delete buttons */
-        .btn-container button.edit,
-        .btn-container button.delete {
-            border: none;
+        .btn-container .delete {
+            background-color: #e74c3c;
+        }
+        .btn-container .delete:hover {
+            background-color: #c0392b;
         }
 
         footer {
@@ -118,9 +117,9 @@
     </header>
 
     <div class="container">
-        <!-- Add New Book Form -->
-        <div class="book-form" id="add-book-form">
-            <h2>Add New Book</h2>
+        <!-- Book Management Section -->
+        <div class="form-container" id="add-book-form">
+            <h2>Add/Edit Book</h2>
             <input type="text" id="book-title" placeholder="Book Title" required>
             <input type="text" id="book-image" placeholder="Image URL" required>
             <input type="url" id="book-synopsis-link" placeholder="Synopsis Link (URL)" required>
@@ -128,20 +127,23 @@
             <button onclick="addBook()">Add Book</button>
         </div>
 
-        <!-- Edit Book Form (Initially hidden) -->
-        <div class="book-form" id="edit-book-form" style="display: none;">
-            <h2>Edit Book</h2>
-            <input type="text" id="edit-book-title" placeholder="Book Title" required>
-            <input type="text" id="edit-book-image" placeholder="Image URL" required>
-            <input type="url" id="edit-book-synopsis-link" placeholder="Synopsis Link (URL)" required>
-            <input type="url" id="edit-book-purchase-link" placeholder="Purchase Link (URL)" required>
-            <button onclick="saveBook()">Save Changes</button>
-            <button onclick="cancelEdit()">Cancel</button>
+        <div class="list-container" id="book-list">
+            <!-- Books will be displayed here -->
         </div>
 
-        <!-- Book List -->
-        <div class="book-list" id="book-list">
-            <!-- Books will be displayed here -->
+        <!-- Event Management Section -->
+        <div class="form-container" id="add-event-form">
+            <h2>Add/Edit Event</h2>
+            <input type="text" id="event-name" placeholder="Event Name" required>
+            <input type="date" id="event-date" required>
+            <input type="text" id="event-location" placeholder="Event Location" required>
+            <input type="text" id="event-description" placeholder="Event Description" required>
+            <input type="text" id="event-image" placeholder="Event Image URL" required>
+            <button onclick="addEvent()">Add Event</button>
+        </div>
+
+        <div class="list-container" id="event-list">
+            <!-- Events will be displayed here -->
         </div>
     </div>
 
@@ -150,13 +152,6 @@
     </footer>
 
     <script>
-        // Check if user is logged in
-        if (localStorage.getItem("isLoggedIn") !== "true") {
-            alert("You need to be logged in as an admin to access this page.");
-            window.location.href = "index.html"; // Redirect to home page
-        }
-
-        // Sample book data (for testing purposes)
         let books = [
             {
                 title: "Will You Love Me?",
@@ -166,14 +161,24 @@
             }
         ];
 
-        // Display books
+        let events = [
+            {
+                name: "Book Launch Event",
+                date: "2025-02-10",
+                location: "IOI City Mall",
+                description: "Join us for the official launch of 'Will You Love Me?'",
+                image: "https://via.placeholder.com/300x200/ff7f50/ffffff?text=Event+Image"
+            }
+        ];
+
+        // Display Books
         function displayBooks() {
             const bookListContainer = document.getElementById('book-list');
-            bookListContainer.innerHTML = ''; // Clear existing content
+            bookListContainer.innerHTML = '';
 
             books.forEach((book, index) => {
                 const bookItem = document.createElement('div');
-                bookItem.classList.add('book-item');
+                bookItem.classList.add('list-item');
                 bookItem.innerHTML = `
                     <img src="${book.image}" alt="${book.title}">
                     <h3>${book.title}</h3>
@@ -188,71 +193,160 @@
             });
         }
 
-        // Add new book
+        // Add Book
         function addBook() {
             const title = document.getElementById('book-title').value;
             const image = document.getElementById('book-image').value;
             const synopsisLink = document.getElementById('book-synopsis-link').value;
             const purchaseLink = document.getElementById('book-purchase-link').value;
 
-            if (title && image && purchaseLink && synopsisLink) {
+            if (title && image && synopsisLink && purchaseLink) {
                 books.push({ title, image, synopsisLink, purchaseLink });
                 displayBooks();
+                clearBookForm(); // Clear form after adding
                 alert("Book added successfully!");
             } else {
                 alert("Please fill in all fields!");
             }
         }
 
-        // Edit book
+        // Clear book form
+        function clearBookForm() {
+            document.getElementById('book-title').value = '';
+            document.getElementById('book-image').value = '';
+            document.getElementById('book-synopsis-link').value = '';
+            document.getElementById('book-purchase-link').value = '';
+        }
+
+        // Edit Book
         function editBook(index) {
             const book = books[index];
-            // Show the edit form and hide the add book form
-            document.getElementById('add-book-form').style.display = 'none';
-            document.getElementById('edit-book-form').style.display = 'block';
+            document.getElementById('book-title').value = book.title;
+            document.getElementById('book-image').value = book.image;
+            document.getElementById('book-synopsis-link').value = book.synopsisLink;
+            document.getElementById('book-purchase-link').value = book.purchaseLink;
 
-            document.getElementById('edit-book-title').value = book.title;
-            document.getElementById('edit-book-image').value = book.image;
-            document.getElementById('edit-book-synopsis-link').value = book.synopsisLink;
-            document.getElementById('edit-book-purchase-link').value = book.purchaseLink;
-
-            // Save the index to be edited
-            window.currentEditIndex = index;
+            // Change the "Add Book" button to "Save Changes"
+            const addButton = document.querySelector('#add-book-form button');
+            addButton.textContent = "Save Changes";
+            addButton.setAttribute('onclick', `saveBookChanges(${index})`);
         }
 
-        // Save edited book
-        function saveBook() {
-            const index = window.currentEditIndex;
-            const title = document.getElementById('edit-book-title').value;
-            const image = document.getElementById('edit-book-image').value;
-            const synopsisLink = document.getElementById('edit-book-synopsis-link').value;
-            const purchaseLink = document.getElementById('edit-book-purchase-link').value;
+        // Save Book Changes
+        function saveBookChanges(index) {
+            const title = document.getElementById('book-title').value;
+            const image = document.getElementById('book-image').value;
+            const synopsisLink = document.getElementById('book-synopsis-link').value;
+            const purchaseLink = document.getElementById('book-purchase-link').value;
 
-            if (title && image && synopsisLink && purchaseLink) {
-                books[index] = { title, image, synopsisLink, purchaseLink };
-                displayBooks();
-                alert("Book updated successfully!");
-                cancelEdit(); // Hide the edit form
-            } else {
-                alert("Please fill in all fields!");
-            }
+            books[index] = { title, image, synopsisLink, purchaseLink };
+            displayBooks();
+            clearBookForm();
+            const addButton = document.querySelector('#add-book-form button');
+            addButton.textContent = "Add Book";
+            addButton.setAttribute('onclick', 'addBook()');
+            alert("Book updated successfully!");
         }
 
-        // Cancel edit
-        function cancelEdit() {
-            document.getElementById('edit-book-form').style.display = 'none';
-            document.getElementById('add-book-form').style.display = 'block';
-        }
-
-        // Delete book
+        // Delete Book
         function deleteBook(index) {
             books.splice(index, 1);
             displayBooks();
             alert("Book deleted successfully!");
         }
 
-        // Display books when the page loads
+        // Display Events
+        function displayEvents() {
+            const eventListContainer = document.getElementById('event-list');
+            eventListContainer.innerHTML = '';
+
+            events.forEach((event, index) => {
+                const eventItem = document.createElement('div');
+                eventItem.classList.add('list-item');
+                eventItem.innerHTML = `
+                    <img src="${event.image}" alt="${event.name}">
+                    <h3>${event.name}</h3>
+                    <p><strong>Date:</strong> ${event.date}</p>
+                    <p><strong>Location:</strong> ${event.location}</p>
+                    <p><strong>Description:</strong> ${event.description}</p>
+                    <div class="btn-container">
+                        <button class="edit" onclick="editEvent(${index})">Edit</button>
+                        <button class="delete" onclick="deleteEvent(${index})">Delete</button>
+                    </div>
+                `;
+                eventListContainer.appendChild(eventItem);
+            });
+        }
+
+        // Add Event
+        function addEvent() {
+            const name = document.getElementById('event-name').value;
+            const date = document.getElementById('event-date').value;
+            const location = document.getElementById('event-location').value;
+            const description = document.getElementById('event-description').value;
+            const image = document.getElementById('event-image').value;
+
+            if (name && date && location && description && image) {
+                events.push({ name, date, location, description, image });
+                displayEvents();
+                clearEventForm(); // Clear form after adding
+                alert("Event added successfully!");
+            } else {
+                alert("Please fill in all fields!");
+            }
+        }
+
+        // Clear event form
+        function clearEventForm() {
+            document.getElementById('event-name').value = '';
+            document.getElementById('event-date').value = '';
+            document.getElementById('event-location').value = '';
+            document.getElementById('event-description').value = '';
+            document.getElementById('event-image').value = '';
+        }
+
+        // Edit Event
+        function editEvent(index) {
+            const event = events[index];
+            document.getElementById('event-name').value = event.name;
+            document.getElementById('event-date').value = event.date;
+            document.getElementById('event-location').value = event.location;
+            document.getElementById('event-description').value = event.description;
+            document.getElementById('event-image').value = event.image;
+
+            // Change the "Add Event" button to "Save Changes"
+            const addButton = document.querySelector('#add-event-form button');
+            addButton.textContent = "Save Changes";
+            addButton.setAttribute('onclick', `saveEventChanges(${index})`);
+        }
+
+        // Save Event Changes
+        function saveEventChanges(index) {
+            const name = document.getElementById('event-name').value;
+            const date = document.getElementById('event-date').value;
+            const location = document.getElementById('event-location').value;
+            const description = document.getElementById('event-description').value;
+            const image = document.getElementById('event-image').value;
+
+            events[index] = { name, date, location, description, image };
+            displayEvents();
+            clearEventForm();
+            const addButton = document.querySelector('#add-event-form button');
+            addButton.textContent = "Add Event";
+            addButton.setAttribute('onclick', 'addEvent()');
+            alert("Event updated successfully!");
+        }
+
+        // Delete Event
+        function deleteEvent(index) {
+            events.splice(index, 1);
+            displayEvents();
+            alert("Event deleted successfully!");
+        }
+
+        // Display initial data
         displayBooks();
+        displayEvents();
     </script>
 
 </body>
