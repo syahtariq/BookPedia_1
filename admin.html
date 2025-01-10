@@ -6,43 +6,108 @@
     <title>Admin - BookPedia</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
             margin: 0;
             padding: 0;
+            color: #333;
         }
-        h1, h2 {
+        h1 {
             text-align: center;
-        }
-        .book-form, .book-list {
-            margin: 20px auto;
             padding: 20px;
-            background-color: white;
-            width: 80%;
-            max-width: 1000px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background-color: #f39c12;
+            color: white;
+            margin: 0;
+            font-size: 2em;
         }
-        input, textarea, button {
+        h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+        .book-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+        .book-form input,
+        .book-form button {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin: 10px 0;
-            font-size: 16px;
-            border: 1px solid #ddd;
             border-radius: 5px;
+            border: 1px solid #ccc; /* Changed border color to grey */
+            font-size: 16px;
+        }
+        .book-form input:focus,
+        .book-form button:focus {
+            outline: none;
+            border-color: #999; /* Changed focus border color to a darker grey */
         }
         .book-list {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
         }
         .book-item {
             background-color: white;
             padding: 20px;
-            width: calc(33% - 40px);
             border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .book-item:hover {
+            transform: translateY(-5px);
+        }
+        .book-item img {
+            width: 100%;
+            height: auto;
+            max-height: 200px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-container button,
+        .btn-container a {
+            background-color: #f39c12;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        .btn-container button:hover,
+        .btn-container a:hover {
+            background-color: #e67e22;
+        }
+
+        /* Remove border for Edit and Delete buttons */
+        .btn-container button.edit,
+        .btn-container button.delete {
+            border: none;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+            margin-top: 40px;
+            padding: 10px;
+            background-color: #f9f9f9;
         }
     </style>
 </head>
@@ -52,17 +117,32 @@
         <h1>Admin Dashboard - BookPedia</h1>
     </header>
 
-    <div class="book-form">
-        <h2>Add New Book</h2>
-        <input type="text" id="book-title" placeholder="Book Title" required>
-        <input type="text" id="book-author" placeholder="Author" required>
-        <input type="text" id="book-image" placeholder="Image URL" required>
-        <textarea id="book-description" placeholder="Description" required></textarea>
-        <button onclick="addBook()">Add Book</button>
-    </div>
+    <div class="container">
+        <!-- Add New Book Form -->
+        <div class="book-form" id="add-book-form">
+            <h2>Add New Book</h2>
+            <input type="text" id="book-title" placeholder="Book Title" required>
+            <input type="text" id="book-image" placeholder="Image URL" required>
+            <input type="url" id="book-synopsis-link" placeholder="Synopsis Link (URL)" required>
+            <input type="url" id="book-purchase-link" placeholder="Purchase Link (URL)" required>
+            <button onclick="addBook()">Add Book</button>
+        </div>
 
-    <div class="book-list" id="book-list">
-        <!-- Books will be displayed here -->
+        <!-- Edit Book Form (Initially hidden) -->
+        <div class="book-form" id="edit-book-form" style="display: none;">
+            <h2>Edit Book</h2>
+            <input type="text" id="edit-book-title" placeholder="Book Title" required>
+            <input type="text" id="edit-book-image" placeholder="Image URL" required>
+            <input type="url" id="edit-book-synopsis-link" placeholder="Synopsis Link (URL)" required>
+            <input type="url" id="edit-book-purchase-link" placeholder="Purchase Link (URL)" required>
+            <button onclick="saveBook()">Save Changes</button>
+            <button onclick="cancelEdit()">Cancel</button>
+        </div>
+
+        <!-- Book List -->
+        <div class="book-list" id="book-list">
+            <!-- Books will be displayed here -->
+        </div>
     </div>
 
     <footer>
@@ -80,9 +160,9 @@
         let books = [
             {
                 title: "Will You Love Me?",
-                author: "Author 1",
                 image: "https://d26olvxuieoyaa.cloudfront.net/catalog/product/cache/1/small_image/1000x1000/9df78eab33525d08d6e5fb8d27136e95/9/7/9789672459675.jpg",
-                description: "A touching love story."
+                purchaseLink: "https://example.com/purchase",
+                synopsisLink: "https://example.com/synopsis",
             }
         ];
 
@@ -95,12 +175,14 @@
                 const bookItem = document.createElement('div');
                 bookItem.classList.add('book-item');
                 bookItem.innerHTML = `
-                    <img src="${book.image}" alt="${book.title}" style="width: 150px;">
+                    <img src="${book.image}" alt="${book.title}">
                     <h3>${book.title}</h3>
-                    <p>${book.author}</p>
-                    <p>${book.description}</p>
-                    <button onclick="deleteBook(${index})">Delete</button>
-                    <button onclick="editBook(${index})">Edit</button>
+                    <div class="btn-container">
+                        <button class="edit" onclick="editBook(${index})">Edit</button>
+                        <button class="delete" onclick="deleteBook(${index})">Delete</button>
+                        <a href="${book.synopsisLink}" target="_blank">Read Synopsis</a>
+                        <a href="${book.purchaseLink}" target="_blank">Add to Cart</a>
+                    </div>
                 `;
                 bookListContainer.appendChild(bookItem);
             });
@@ -109,12 +191,12 @@
         // Add new book
         function addBook() {
             const title = document.getElementById('book-title').value;
-            const author = document.getElementById('book-author').value;
             const image = document.getElementById('book-image').value;
-            const description = document.getElementById('book-description').value;
+            const synopsisLink = document.getElementById('book-synopsis-link').value;
+            const purchaseLink = document.getElementById('book-purchase-link').value;
 
-            if (title && author && image && description) {
-                books.push({ title, author, image, description });
+            if (title && image && purchaseLink && synopsisLink) {
+                books.push({ title, image, synopsisLink, purchaseLink });
                 displayBooks();
                 alert("Book added successfully!");
             } else {
@@ -122,28 +204,51 @@
             }
         }
 
+        // Edit book
+        function editBook(index) {
+            const book = books[index];
+            // Show the edit form and hide the add book form
+            document.getElementById('add-book-form').style.display = 'none';
+            document.getElementById('edit-book-form').style.display = 'block';
+
+            document.getElementById('edit-book-title').value = book.title;
+            document.getElementById('edit-book-image').value = book.image;
+            document.getElementById('edit-book-synopsis-link').value = book.synopsisLink;
+            document.getElementById('edit-book-purchase-link').value = book.purchaseLink;
+
+            // Save the index to be edited
+            window.currentEditIndex = index;
+        }
+
+        // Save edited book
+        function saveBook() {
+            const index = window.currentEditIndex;
+            const title = document.getElementById('edit-book-title').value;
+            const image = document.getElementById('edit-book-image').value;
+            const synopsisLink = document.getElementById('edit-book-synopsis-link').value;
+            const purchaseLink = document.getElementById('edit-book-purchase-link').value;
+
+            if (title && image && synopsisLink && purchaseLink) {
+                books[index] = { title, image, synopsisLink, purchaseLink };
+                displayBooks();
+                alert("Book updated successfully!");
+                cancelEdit(); // Hide the edit form
+            } else {
+                alert("Please fill in all fields!");
+            }
+        }
+
+        // Cancel edit
+        function cancelEdit() {
+            document.getElementById('edit-book-form').style.display = 'none';
+            document.getElementById('add-book-form').style.display = 'block';
+        }
+
         // Delete book
         function deleteBook(index) {
             books.splice(index, 1);
             displayBooks();
             alert("Book deleted successfully!");
-        }
-
-        // Edit book
-        function editBook(index) {
-            const book = books[index];
-            const newTitle = prompt("Edit Book Title", book.title);
-            const newAuthor = prompt("Edit Book Author", book.author);
-            const newImage = prompt("Edit Book Image URL", book.image);
-            const newDescription = prompt("Edit Book Description", book.description);
-
-            if (newTitle && newAuthor && newImage && newDescription) {
-                books[index] = { title: newTitle, author: newAuthor, image: newImage, description: newDescription };
-                displayBooks();
-                alert("Book updated successfully!");
-            } else {
-                alert("Please fill in all fields!");
-            }
         }
 
         // Display books when the page loads
