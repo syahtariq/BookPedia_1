@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - BookPedia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .book-form, .book-list {
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            width: 80%;
+            max-width: 1000px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        input, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .book-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .book-item {
+            background-color: white;
+            padding: 20px;
+            width: calc(33% - 40px);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Admin Dashboard - BookPedia</h1>
+    </header>
+
+    <div class="book-form">
+        <h2>Add New Book</h2>
+        <input type="text" id="book-title" placeholder="Book Title" required>
+        <input type="text" id="book-author" placeholder="Author" required>
+        <input type="text" id="book-image" placeholder="Image URL" required>
+        <textarea id="book-description" placeholder="Description" required></textarea>
+        <button onclick="addBook()">Add Book</button>
+    </div>
+
+    <div class="book-list" id="book-list">
+        <!-- Books will be displayed here -->
+    </div>
+
+    <footer>
+        <p>&copy; 2024 BookPedia | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        // Check if user is logged in
+        if (localStorage.getItem("isLoggedIn") !== "true") {
+            alert("You need to be logged in as an admin to access this page.");
+            window.location.href = "index.html"; // Redirect to home page
+        }
+
+        // Sample book data (for testing purposes)
+        let books = [
+            {
+                title: "Will You Love Me?",
+                author: "Author 1",
+                image: "https://d26olvxuieoyaa.cloudfront.net/catalog/product/cache/1/small_image/1000x1000/9df78eab33525d08d6e5fb8d27136e95/9/7/9789672459675.jpg",
+                description: "A touching love story."
+            }
+        ];
+
+        // Display books
+        function displayBooks() {
+            const bookListContainer = document.getElementById('book-list');
+            bookListContainer.innerHTML = ''; // Clear existing content
+
+            books.forEach((book, index) => {
+                const bookItem = document.createElement('div');
+                bookItem.classList.add('book-item');
+                bookItem.innerHTML = `
+                    <img src="${book.image}" alt="${book.title}" style="width: 150px;">
+                    <h3>${book.title}</h3>
+                    <p>${book.author}</p>
+                    <p>${book.description}</p>
+                    <button onclick="deleteBook(${index})">Delete</button>
+                    <button onclick="editBook(${index})">Edit</button>
+                `;
+                bookListContainer.appendChild(bookItem);
+            });
+        }
+
+        // Add new book
+        function addBook() {
+            const title = document.getElementById('book-title').value;
+            const author = document.getElementById('book-author').value;
+            const image = document.getElementById('book-image').value;
+            const description = document.getElementById('book-description').value;
+
+            if (title && author && image && description) {
+                books.push({ title, author, image, description });
+                displayBooks();
+                alert("Book added successfully!");
+            } else {
+                alert("Please fill in all fields!");
+            }
+        }
+
+        // Delete book
+        function deleteBook(index) {
+            books.splice(index, 1);
+            displayBooks();
+            alert("Book deleted successfully!");
+        }
+
+        // Edit book
+        function editBook(index) {
+            const book = books[index];
+            const newTitle = prompt("Edit Book Title", book.title);
+            const newAuthor = prompt("Edit Book Author", book.author);
+            const newImage = prompt("Edit Book Image URL", book.image);
+            const newDescription = prompt("Edit Book Description", book.description);
+
+            if (newTitle && newAuthor && newImage && newDescription) {
+                books[index] = { title: newTitle, author: newAuthor, image: newImage, description: newDescription };
+                displayBooks();
+                alert("Book updated successfully!");
+            } else {
+                alert("Please fill in all fields!");
+            }
+        }
+
+        // Display books when the page loads
+        displayBooks();
+    </script>
+
+</body>
+</html>
