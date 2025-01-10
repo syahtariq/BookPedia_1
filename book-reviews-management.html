@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Reviews Management - BookPedia</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            padding: 20px;
+            background-color: #f39c12;
+            color: white;
+            margin: 0;
+            font-size: 2em;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #f39c12;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        .form-container input, .form-container button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        .form-container input:focus, .form-container button:focus {
+            outline: none;
+            border-color: #f39c12;
+        }
+        .list-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .list-item {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .list-item:hover {
+            transform: translateY(-5px);
+        }
+        .list-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-container button, .btn-container a {
+            background-color: #f39c12;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            font-size: 14px;
+            transition: background-color 0.3s;
+            border: none;
+        }
+        .btn-container button:hover, .btn-container a:hover {
+            background-color: #e67e22;
+        }
+        .btn-container .delete {
+            background-color: #e74c3c;
+        }
+        .btn-container .delete:hover {
+            background-color: #c0392b;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+            margin-top: 40px;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Book Reviews Management - BookPedia</h1>
+        <nav>
+            <a href="admin.html">Back to Admin Dashboard</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="list-container" id="review-list">
+            <h2>Manage Book Reviews</h2>
+            <!-- Reviews will be displayed here -->
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 BookPedia | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        // Sample Data for Reviews
+        let reviews = [
+            {
+                bookTitle: "Lessons in Chemistry",
+                author: "By Bonnie Garmus",
+                rating: "⭐⭐⭐⭐⭐",
+                review: "A delightful blend of humor, science, and feminism. Elizabeth Zott is an unforgettable character!",
+                image: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1634748496i/58065033.jpg",
+            },
+            {
+                bookTitle: "The Covenant of Water",
+                author: "By Abraham Verghese",
+                rating: "⭐⭐⭐⭐⭐",
+                review: "A sweeping tale of family, love, and resilience in Kerala. Verghese's storytelling is masterful.",
+                image: "https://images-na.ssl-images-amazon.com/images/I/81A-mvlo+QL.jpg",
+            }
+        ];
+
+        // Function to Display Reviews
+        function displayReviews() {
+            const reviewListContainer = document.getElementById('review-list');
+            reviewListContainer.innerHTML = ''; // Clear previous list
+
+            reviews.forEach((review, index) => {
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('list-item');
+                reviewItem.innerHTML = `
+                    <img src="${review.image}" alt="${review.bookTitle}" />
+                    <h3>${review.bookTitle}</h3>
+                    <p>${review.author}</p>
+                    <div class="rating">${review.rating}</div>
+                    <p>"${review.review}"</p>
+                    <div class="btn-container">
+                        <button class="delete" onclick="deleteReview(${index})">Delete</button>
+                    </div>
+                `;
+                reviewListContainer.appendChild(reviewItem);
+            });
+        }
+
+        // Function to Delete a Review
+        function deleteReview(index) {
+            reviews.splice(index, 1);  // Remove the review at the specified index
+            displayReviews();  // Re-render the updated reviews
+            alert("Review deleted successfully!");  // Optional alert
+        }
+
+        // Initial Display of Reviews
+        displayReviews();
+    </script>
+
+</body>
+</html>

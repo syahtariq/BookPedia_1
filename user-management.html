@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - BookPedia</title>
+    <nav>
+        <a href="admin.html">Back to Admin Dashboard</a>
+    </nav>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            padding: 20px;
+            background-color: #f39c12;
+            color: white;
+            margin: 0;
+            font-size: 2em;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #f39c12;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+        .list-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .list-item {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .list-item:hover {
+            transform: translateY(-5px);
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-container button, .btn-container a {
+            background-color: #f39c12;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            font-size: 14px;
+            transition: background-color 0.3s;
+            border: none;
+        }
+        .btn-container button:hover, .btn-container a:hover {
+            background-color: #e67e22;
+        }
+        .btn-container .delete {
+            background-color: #e74c3c;
+        }
+        .btn-container .delete:hover {
+            background-color: #c0392b;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+            margin-top: 40px;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Admin Dashboard - User Management</h1>
+    </header>
+
+    <div class="container">
+        <!-- User List Section -->
+        <div class="list-container" id="user-list">
+            <!-- Users will be displayed here -->
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 BookPedia | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        let users = [
+            {
+                name: "John Doe",
+                email: "john.doe@example.com",
+                password: "password123"
+            },
+            {
+                name: "Jane Smith",
+                email: "jane.smith@example.com",
+                password: "password456"
+            }
+        ];
+
+        // Display Users
+        function displayUsers() {
+            const userListContainer = document.getElementById('user-list');
+            userListContainer.innerHTML = '';
+
+            users.forEach((user, index) => {
+                const userItem = document.createElement('div');
+                userItem.classList.add('list-item');
+                userItem.innerHTML = `
+                    <h3>${user.name}</h3>
+                    <p><strong>Email:</strong> ${user.email}</p>
+                    <div class="btn-container">
+                        <button class="delete" onclick="deleteUser(${index})">Delete</button>
+                    </div>
+                `;
+                userListContainer.appendChild(userItem);
+            });
+        }
+
+        // Delete User
+        function deleteUser(index) {
+            users.splice(index, 1);
+            displayUsers();
+            alert("User deleted successfully!");
+        }
+
+        // Display initial data
+        displayUsers();
+    </script>
+
+</body>
+</html>
